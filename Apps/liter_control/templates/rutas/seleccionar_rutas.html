@@ -1,0 +1,83 @@
+{% extends 'layouts/navbar.html' %}
+{% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="text-center">Project Add</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Project Add</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    {% if messages %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Main content -->
+    <form method="POST" action="{% url 'crear_rutas' %}" class="mx-auto">
+      {% csrf_token %}
+
+      <!-- Application buttons -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Application Buttons</h3>
+        </div>
+        <div class="card-body">
+          {% for rutas in ruta %}
+
+          <a href="{% url 'registro_diario' rutas.id %}" class="btn btn-app">
+
+            <span class="badge bg-success">{{rutas.num_proveedores}}</span>
+            <i class="fas fa-barcode"></i> {{ rutas.name_route }}
+           
+          </a>
+
+
+          {% endfor %}
+
+        </div>
+        <!-- /.card-body -->
+      </div>
+
+
+
+      <!-- /.card -->
+  </div>
+  <!-- /.content -->
+  </form>
+  
+
+</div>
+
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+  <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+  All rights reserved.
+  <div class="float-right d-none d-sm-inline-block">
+    <b>Version</b> 3.2.0
+  </div>
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+
+{% endblock %}

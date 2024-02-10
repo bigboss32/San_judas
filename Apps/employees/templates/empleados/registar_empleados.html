@@ -1,0 +1,190 @@
+{% extends 'layouts/navbar.html' %}
+{% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="text-center">Agregar Empleado</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Project Add</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    {% if messages %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Main content -->
+    <form method="POST" action="{% url 'new_employees' %}" class="mx-auto">
+      {% csrf_token %}
+      <section class="content">
+        <div class="row justify-content-center">
+
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">General</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputPrimerNombre">Primer nombre</label>
+                      <input type="text" class="form-control" id="primernombre" name="primernombre" required>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputSegundoNombre">Segundo nombre</label>
+                      <input type="text" class="form-control" id="segundonombre" name="segundonombre" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputPrimerApellido">Primer apellido</label>
+                      <input type="text" class="form-control" id="primerapellido" name="primerapellido" required>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputSegundoApellido">Segundo apellido</label>
+                      <input type="text" class="form-control" id="segundoapellido" name="segundoapellido" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputCedula">Cedula</label>
+                      <input type="text" class="form-control" id="cedula" name="cedula" required>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputRutas">Rol</label>
+                      <select class="form-control" id="rol" name="rol" required>
+                        <option selected disabled>Seleccione un rol</option>
+                        {% for rols in rol %}
+                          <option value="{{ rols.id }}">{{ rols.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="estado" name="estado" checked>
+                  <label class="form-check-label" for="flexSwitchCheckChecked">Estado de la ruta</label>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="row justify-content-center">
+      
+                  <input type="submit" value="Create new Project" class="btn btn-success">
+                </div>
+              </div>
+             
+            </div>
+          </div>
+          
+        </div>
+
+      
+      </section>
+      <!-- /.content -->
+    </form>
+    
+    <form method="POST" action="{% url 'new_rol' %}" class="mx-auto">
+      {% csrf_token %}
+      <section class="content">
+        <div class="row justify-content-center">
+
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Crear rol</h3>
+              
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool collapsed" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row ">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputPrimerNombre">Nombre</label>
+                      <input type="text" class="form-control" id="rol_empelado" name="rol_empelado" required>
+                    </div>
+                  </div>
+             
+             
+              <div class="card-body">
+                <div class="row justify-content-center">
+      
+                  <input type="submit" value="Create new Project" class="btn btn-success">
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+     
+      </section>
+      <!-- /.content -->
+    </form>
+  </div>
+
+  
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+
+{% endblock %}

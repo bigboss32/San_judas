@@ -1,0 +1,148 @@
+{% extends 'layouts/navbar.html' %}
+{% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="text-center">Agregar Empleado</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Project Add</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    {% if messages %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Main content -->
+    <form method="POST" action="{% url 'register_day_trasport' %}" class="mx-auto">
+      {% csrf_token %}
+      <section class="content">
+        <div class="row justify-content-center">
+
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">General</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputPrimerNombre">Valor</label>
+                      <input type="text" class="form-control" id="Valor" name="Valor" required>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputSegundoNombre">Dia</label>
+                      <input type="date" class="form-control" id="Dia" name="Dia" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+       
+           
+              
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                   
+                  </div>
+              
+                  <div class="col-md-6">
+                    <div class="form-group">
+                     
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputRutas">Automovil</label>
+                      <select class="form-control" id="Automovil" name="Automovil" required>
+                        <option selected disabled>Seleccione un rol</option>
+                        {% for automovils in automovil %}
+                          <option value="{{ automovils.id }}">{{ automovils.placa }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputRutas">Conductor</label>
+                      <select class="form-control" id="Conductor" name="Conductor" required>
+                        <option selected disabled>Seleccione un Conductor</option>
+                        {% for conductores in conductor %}
+                          <option value="{{ conductores.id }}">{{ conductores.first_name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="Trabajo" name="Trabajo" checked>
+                  <label class="form-check-label" for="flexSwitchCheckChecked">Trabajo</label>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="row justify-content-center">
+      
+                  <input type="submit" value="Create new Project" class="btn btn-success">
+                </div>
+              </div>
+             
+            </div>
+          </div>
+          
+        </div>
+
+      
+      </section>
+      <!-- /.content -->
+    </form>
+    
+   
+  </div>
+
+  
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+
+{% endblock %}

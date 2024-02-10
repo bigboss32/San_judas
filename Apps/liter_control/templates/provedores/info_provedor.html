@@ -1,0 +1,118 @@
+{% extends 'layouts/navbar.html' %}
+{% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Project Add</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Project Add</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    {% if messages %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Main content -->
+    <form method="POST" action="{% url 'crearprovedores' %}">
+      {% csrf_token %}
+      <section class="content">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">DataTable with default features</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Ruta</th>
+                  <th>Cedula</th>
+                  <th>Litros mes</th>
+                  <th>Adelantos</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tbody>
+                {% for provedors in litros_por_proveedor %}
+                <form method="POST" action=" ">
+                  {% csrf_token %}
+                  <tr>
+                    <td>
+                      {{provedors.provedor__first_name}} 
+                     
+                    </td>
+                    <td>
+                      {{provedors.ruta__name_route}} 
+                    </td>
+                    </td>
+                    <td>{{provedors.provedor__cedula}} </td>
+                    <td>
+                     {{provedors.total_litros}}
+                    </td>
+                    <td>
+                      {{provedors.total_adelantos}}
+                    </td>
+                    <td>
+                      {{provedors.value_total_adelantos}}
+                    </td>
+                </form>
+                </tr>
+                <tr>
+                </tr>
+                {% endfor %}
+              </tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Total de provedores: {{total_provedores}}</th>
+                  <th> </th>
+                  <th> </th>
+                  <th>Total de litros: {{total_litros_en_toda_la_consulta}}</th>
+                  <th>Total de adelantos: {{total_adelantos_en_toda_la_consulta}}</th>
+                  <th>Total: {{total_total_en_toda_la_consulta}}</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+
+      </section>
+      <!-- /.content -->
+    </form>
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+
+{% endblock %}

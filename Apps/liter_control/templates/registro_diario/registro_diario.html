@@ -1,0 +1,146 @@
+{% extends 'layouts/navbar.html' %}
+{% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+
+    <!-- Main content -->
+
+    {% csrf_token %}
+    <section class="content">
+      <div class="row justify-content-center">
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Registro diario de leche</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+
+              <thead>
+                <tr>
+                  <th>Provedor</th>
+                  <th>Cedula</th>
+                  <th>Dia</th>
+                  <th>Litros</th>
+                  <th>valor litro</th>
+                  <th>avances</th>
+                  <th>trasporte</th>
+                  <th>Accion</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for provedors in provedor %}
+                <form method="POST" action="{% url 'registro_diario' ruta_id=ruta_id %}">
+                  {% csrf_token %}
+                  <tr>
+                    <td>{{provedors.first_name}} {{provedors.second_name}} {{provedors.last_name}}
+                      {{provedors.second_last_name}}
+                      <input type="hidden" name="id" value="{{ provedors.id }}">
+                    </td>
+                    <td>{{provedors.cedula}}
+                 
+
+                    </td>
+                    <td><input type="date" class="form-control "  id="fecha" name="fecha"/></td>
+
+                    <td>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" placeholder="0" required id="litros" name="litros">
+                        <div class="input-group-append">
+                          <span class="input-group-text">.00</span>
+                        </div>
+                      </div>
+
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" placeholder="0" required id="valor_litro" name="valor_litro">
+                        <div class="input-group-append">
+                          <span class="input-group-text">.00</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" placeholder="0" required id="avances" name="avances">
+                        <div class="input-group-append">
+                          <span class="input-group-text">.00</span>
+                        </div>
+                      </div>
+                      
+                    </td>
+                    <td>
+                      <select class="form-control" id="auto" name="auto" required>
+                        <option selected disabled>Seleccione un trasporte</option>
+                        {% for trasportes in trasporte %}
+                          <option value="{{ trasportes.id }}">{{ trasportes.empleado.first_name }}</option>
+                        {% endfor %}
+                      </select>
+                      
+                    </td>
+                    <td>
+                      <div class="row">
+                        <button type="submit" class="btn btn-block btn-outline-success">Success</button>
+                      </div>
+                      
+                    </td>
+                </form>
+                </tr>
+                <tr>
+
+
+                </tr>
+
+                {% endfor %}
+
+
+              </tbody>
+         
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="row justify-content-center">
+
+          <input type="submit" value="Create new Project" class="btn btn-success">
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+    </form>
+
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+
+
+{% endblock %}
