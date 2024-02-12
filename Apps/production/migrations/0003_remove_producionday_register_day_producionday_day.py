@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('production', '0002_remove_producionday_producrion_producto_and_more'),
+        ("production", "0002_remove_producionday_producrion_producto_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='producionday',
-            name='register_day',
+            model_name="producionday",
+            name="register_day",
         ),
         migrations.AddField(
-            model_name='producionday',
-            name='day',
+            model_name="producionday",
+            name="day",
             field=models.DateField(blank=True, default=None, null=True),
         ),
     ]

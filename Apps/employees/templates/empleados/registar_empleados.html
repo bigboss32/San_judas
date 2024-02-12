@@ -53,7 +53,7 @@
                       <input type="text" class="form-control" id="primernombre" name="primernombre" required>
                     </div>
                   </div>
-              
+
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="inputSegundoNombre">Segundo nombre</label>
@@ -62,7 +62,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
@@ -71,7 +71,7 @@
                       <input type="text" class="form-control" id="primerapellido" name="primerapellido" required>
                     </div>
                   </div>
-              
+
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="inputSegundoApellido">Segundo apellido</label>
@@ -80,7 +80,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
@@ -89,7 +89,7 @@
                       <input type="text" class="form-control" id="cedula" name="cedula" required>
                     </div>
                   </div>
-              
+
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="inputRutas">Rol</label>
@@ -111,21 +111,21 @@
               </div>
               <div class="row justify-content-center">
                 <div class="row justify-content-center">
-      
+
                   <input type="submit" value="Create new Project" class="btn btn-success">
                 </div>
               </div>
-             
+
             </div>
           </div>
-          
+
         </div>
 
-      
+
       </section>
       <!-- /.content -->
     </form>
-    
+
     <form method="POST" action="{% url 'new_rol' %}" class="mx-auto">
       {% csrf_token %}
       <section class="content">
@@ -135,7 +135,7 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Crear rol</h3>
-              
+
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool collapsed" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -150,26 +150,26 @@
                       <input type="text" class="form-control" id="rol_empelado" name="rol_empelado" required>
                     </div>
                   </div>
-             
-             
+
+
               <div class="card-body">
                 <div class="row justify-content-center">
-      
+
                   <input type="submit" value="Create new Project" class="btn btn-success">
                 </div>
               </div>
-             
+
             </div>
           </div>
         </div>
 
-     
+
       </section>
       <!-- /.content -->
     </form>
   </div>
 
-  
+
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">

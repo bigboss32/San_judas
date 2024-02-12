@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class LiterControlConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Apps.liter_control'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "Apps.liter_control"
