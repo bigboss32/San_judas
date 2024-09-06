@@ -25,7 +25,7 @@ services:
       - DJANGO_SUPERUSER_EMAIL=San_judas@San_judas.co
       - DJANGO_SUPERUSER_PASSWORD=admin
       - RUN_SERVER=true
-    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     depends_on:
