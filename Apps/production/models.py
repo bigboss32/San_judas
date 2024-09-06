@@ -13,5 +13,7 @@ class ProducionDay(models.Model):
 
 
 class ProductionProducto(models.Model):
+    data_register = models.DateTimeField(auto_now_add=True)
     producionday = models.ForeignKey(ProducionDay, on_delete=models.CASCADE)
     producto = models.CharField(null=True, blank=True)
+    cantidad=models.FloatField(null=True, blank=True)

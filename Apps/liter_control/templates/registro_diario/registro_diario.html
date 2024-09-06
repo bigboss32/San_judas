@@ -6,6 +6,7 @@
 
 
     <!-- Main content -->
+    <h1>fecha seleccionada para el registro {{fecha_seleccionada}}</h1>
 
     {% csrf_token %}
     <section class="content">
@@ -28,6 +29,9 @@
                   <th>valor litro</th>
                   <th>avances</th>
                   <th>trasporte</th>
+                  <th>valor trasporte</th>
+                  <th>Litros Eliminados</th>
+
                   <th>Accion</th>
                 </tr>
               </thead>
@@ -44,7 +48,8 @@
 
 
                     </td>
-                    <td><input type="date" class="form-control "  id="fecha" name="fecha"/></td>
+                    <td><input type="hidden" id="fecha" name="fecha" value="{{ fecha_seleccionada }}">
+                      <div>{{ fecha_seleccionada }}</div></td>
 
                     <td>
                       <div class="input-group">
@@ -63,7 +68,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" class="form-control" placeholder="0" required id="valor_litro" name="valor_litro">
+                        <input type="number" class="form-control" placeholder="0" required id="valor_litro" name="valor_litro"  value="1100">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
                         </div>
@@ -74,22 +79,44 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" class="form-control" placeholder="0" required id="avances" name="avances">
+                        <input type="number" class="form-control" placeholder="0" required id="avances" name="avances" value="0">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
                         </div>
                       </div>
 
                     </td>
+                    <td>{{trasporte.conductor}}
+                      <input type="hidden" name="id_trasporte" id="id_trasporte" value="{{ trasporte.id }}">
+                    </td>
+
+
                     <td>
-                      <select class="form-control" id="auto" name="auto" required>
-                        <option selected disabled>Seleccione un trasporte</option>
-                        {% for trasportes in trasporte %}
-                          <option value="{{ trasportes.id }}">{{ trasportes.empleado.first_name }}</option>
-                        {% endfor %}
-                      </select>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" placeholder="0" required id="Valor_tras" name="Valor_tras" value="250">
+                        <div class="input-group-append">
+                          <span class="input-group-text">.00</span>
+                        </div>
+                      </div>
+
 
                     </td>
+                    <td>
+
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" placeholder="0" required id="Litros_eli" name="Litros_eli" value="0">
+                        <div class="input-group-append">
+                          <span class="input-group-text">.00</span>
+                        </div>
+                      </div>
+                    </td>
+
                     <td>
                       <div class="row">
                         <button type="submit" class="btn btn-block btn-outline-success">Success</button>
@@ -135,6 +162,7 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+
 
 
 {% endblock %}

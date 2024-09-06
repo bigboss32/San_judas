@@ -12,33 +12,41 @@ class CreateRegister:
 
     def createregisterday(self, request, ruta_id):
 
-        auto = request.POST["auto"]
+
         litros = request.POST["litros"]
         valor_litro = request.POST["valor_litro"]
         avances = request.POST["avances"]
         fecha = request.POST["fecha"]
         id = request.POST["id"]
-        total = int(valor_litro) * int(litros)
-        total_adelanto = total - int(avances)
+        id_trasporte = request.POST["id_trasporte"]
+        Valor_tras = request.POST["Valor_tras"]
+        Litros_eli = request.POST["Litros_eli"]
+
         data = {
             "litros": litros,
             "valor_litro": valor_litro,
             "avances": avances,
             "fecha": fecha,
             "id": id,
-            "total": total,
-            "total_adelanto": total_adelanto,
             "ruta_id": ruta_id,
-            "trasporte": auto,
+            "id_trasporte":id_trasporte,
+            "Valor_tras":Valor_tras,
+            "Litros_eli":Litros_eli,
+
         }
-        self.database.create_register_day(data)
-        return redirect("registro_diario", ruta_id=ruta_id)
+
+        registerday=self.database.create_register_day(data)
+        self.database.create_register_day_trasport(data,registerday)
+        url_completa = f"/registro_diario/{ruta_id}/?fecha={fecha}"
+        return redirect(url_completa)
+
 
     def get_rutas(self, request, ruta_id, template_name):
-        provedor = self.database.obtener_provedor(ruta_id)
-        trasporte = self.database.obtener_trasporte()
+        provedor = self.database.obtener_provedor(ruta_id,request)
+        trasporte = self.database.obtener_trasporte(ruta_id)
+        fecha=request.GET.get('fecha')
         return render(
             request,
             template_name,
-            {"provedor": provedor, "ruta_id": ruta_id, "trasporte": trasporte},
+            {"provedor": provedor, "ruta_id": ruta_id, "trasporte": trasporte,"fecha_seleccionada":fecha},
         )

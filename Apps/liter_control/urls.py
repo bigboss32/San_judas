@@ -10,4 +10,5 @@ urlpatterns = [
     ),
     path("seleccionar_rutas", SelectRutaView.as_view(), name="seleccionar_rutas"),
     path("obtener_provedores", ObtenerProvedores.as_view(), name="obtener_provedores"),
+    path("actualizar_valor_litros", LiterUpdate.as_view(), name="actualizar_valor_litros"),
 ]

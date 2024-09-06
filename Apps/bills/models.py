@@ -20,11 +20,11 @@ class Gastos(models.Model):
         ("bolsas", "Bolsas"),
         ("cloro", "Cloro"),
     ]
-    producion_day = models.ForeignKey(ProducionDay, on_delete=models.CASCADE)
     tipo_de_gasto = models.CharField(
         null=True, blank=True, choices=TIPOS_DE_GASTO_CHOICES
     )
     descripcion = models.CharField(null=True, blank=True)
     valor = models.IntegerField(null=True, blank=True)
+    cantidad = models.IntegerField(null=True, blank=True)
     data_register = models.DateTimeField(auto_now_add=True)
     day = models.DateField(default=None, null=True, blank=True)

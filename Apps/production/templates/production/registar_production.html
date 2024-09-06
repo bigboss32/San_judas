@@ -1,0 +1,200 @@
+{% extends 'layouts/navbar.html' %}
+{% block content %}
+<style>
+  .input-date {
+      /* Estilos similares al input type="date" */
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+  }
+
+  .ui-datepicker {
+      /* Ajustar el calendario */
+      font-size: 14px; /* Igualar el tamaño de fuente */
+      background-color: #fff; /* Fondo blanco */
+      border: 1px solid #ccc; /* Borde gris */
+      border-radius: 4px; /* Borde redondeado */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+      position: absolute; /* Posición absoluta */
+      z-index: 9999; /* Asegurar que esté sobre otros elementos */
+  }
+
+  .ui-datepicker-header {
+      /* Estilos del encabezado */
+      background-color: #f0f0f0; /* Fondo gris claro */
+      border-bottom: 1px solid #ccc; /* Borde inferior gris */
+      text-align: center; /* Centrar texto */
+  }
+
+  .ui-datepicker-title {
+      /* Estilos del título (mes y año) */
+      color: #333; /* Color de texto negro */
+  }
+
+  .ui-datepicker-prev, .ui-datepicker-next {
+      /* Estilos de los botones de navegación */
+      background-color: transparent; /* Fondo transparente */
+      border: none; /* Sin borde */
+      outline: none; /* Sin contorno */
+      cursor: pointer; /* Cursor apuntador */
+  }
+
+  .ui-datepicker-calendar {
+      /* Estilos del calendario */
+      width: 100%; /* Ancho completo */
+      border-collapse: collapse; /* Colapso de bordes */
+      margin: 0; /* Sin margen */
+  }
+
+  .ui-datepicker-calendar .ui-state-default {
+      /* Estilos de los días */
+      padding: 4px; /* Espaciado interior */
+      text-align: center; /* Centrar texto */
+      cursor: pointer; /* Cursor apuntador */
+  }
+
+  .ui-datepicker-calendar .ui-state-default:hover {
+      /* Estilos de los días al pasar el mouse */
+      background-color: #f0f0f0; /* Fondo gris claro */
+  }
+</style>
+
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="text-center">Registar Produccion</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Project Add</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    {% if messages %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Main content -->
+    <form method="POST" action="{% url 'registrar_production' %}" class="mx-auto">
+      {% csrf_token %}
+      <section class="content">
+        <div class="row justify-content-center">
+
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">General</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputPrimerNombre">Cantidad de KG</label>
+                      <input type="number" class="form-control" id="Cantidad" name="Cantidad" step="0.01" pattern="^\d+(\.\d{1,2})?$" title="Por favor ingresa un número decimal válido (hasta dos decimales)" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputSegundoNombre">Producto</label>
+                      <input type="text" class="form-control" id="Producto" name="Producto" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputStatus">rutas</label>
+                  <input type="text" class="form-control" id="fecha" name="fecha" readonly>
+
+                </div>
+
+
+              </div>
+
+
+
+
+              <div class="row justify-content-center">
+                <div class="row justify-content-center">
+
+                  <input type="submit" value="Create new Project" class="btn btn-success">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </section>
+      <!-- /.content -->
+    </form>
+
+
+  </div>
+
+
+
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- FullCalendar CSS -->
+<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css' rel='stylesheet' />
+
+<!-- jQuery -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $(function() {
+    var fechasHabilitadas = [];
+    {% for dias in dias_de_produccion %}
+        fechasHabilitadas.push("{{ dias.name_producction }}");
+    {% endfor %}
+
+    $("#fecha").datepicker({
+        dateFormat: "yy-mm-dd",
+        beforeShowDay: function(date) {
+            var stringFecha = $.datepicker.formatDate("yy-mm-dd", date);
+            return [fechasHabilitadas.includes(stringFecha)];
+        }
+    });
+});
+</script>
+{% endblock %}

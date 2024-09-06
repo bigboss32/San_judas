@@ -1,0 +1,188 @@
+{% extends 'layouts/navbar.html' %}
+{% load humanize %}
+{% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Project Add</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Project Add</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    {% if messages %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+
+    <!-- Main content -->
+    <form method="POST" action="{% url 'Obtener_trasporte' %}">
+
+      {% csrf_token %}
+      <section class="content">
+        <div class="card">
+          <div class="form-group">
+            <label>Date range:</label>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="far fa-calendar-alt"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control float-right" name="range" id="reservation">
+              <div class="row">
+                <div class="col-12">
+
+                  <input type="submit" value="Aplicar Filtro" class="btn btn-success float-right">
+                </div>
+              </div>
+            </div>
+            <!-- /.input group -->
+          </div>
+          <div class="card-header">
+            <h3 class="card-title">DataTable with default features</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Ruta</th>
+                  <th>Cedula</th>
+                  <th>Litros Totales</th>
+                  <th>Litros Perdidos</th>
+                  <th>Valor por litro</th>
+                  <th>Total a pagar leche</th>
+                  <th>Adelantos</th>
+                  <th>Total netos</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tbody>
+                {% for conductor in resultados_por_conductor %}
+                <form method="POST" action=" ">
+                  {% csrf_token %}
+                  <tr>
+                    <td>
+                      {{conductor.trasporte__conductor}}
+
+                    </td>
+                    <td>
+                      {{conductor.trasporte__ruta__name_route}}
+                    </td>
+                    </td>
+                    <td>{{provedors.provedor__cedula}} </td>
+                    <td>
+                     {{conductor.total_litros|intcomma }}-{{conductor.total_litros_perdidos|intcomma }}
+                    </td>
+                    <td>
+
+                      {{conductor.total_a_pagar_menosleche_perdida|intcomma }}
+
+                     </td>
+                    <td>
+                      {{conductor.value_liter_traspo}}
+                    </td>
+                    <td>
+                      {{conductor.total_litros_valen|intcomma }}
+                    </td>
+                    <td>
+                      {{conductor.total_adelantos|intcomma }}
+                    </td>
+                    <td>
+                      {{conductor.total_a_pagar|intcomma }}
+                    </td>
+                </form>
+                </tr>
+                <tr>
+                </tr>
+                {% endfor %}
+              </tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Total de provedores: {{total_provedores}}</th>
+                  <th> </th>
+                  <th> </th>
+                  <th>Total de litros: {{total_litros_en_toda_la_consulta|intcomma }}</th>
+                  <th>Total de adelantos: {{total_adelantos_en_toda_la_consulta|intcomma }}</th>
+                  <th>Total: {{total_total_en_toda_la_consulta|intcomma }}</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+
+      </section>
+      <!-- /.content -->
+    </form>
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(function () {
+
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    });
+</script>
+
+{% endblock %}

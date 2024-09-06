@@ -1,18 +1,17 @@
 from django.contrib import admin
-
 from .models import *
 
-
 @admin.register(Trasporte)
-class TransporteAdmin(admin.ModelAdmin):
-    list_display = ("empleado", "automovil", "registerdaytrasport", "data_register")
+class TrasporteAdmin(admin.ModelAdmin):
+    list_display = ("conductor","ruta")
 
 
-@admin.register(Automovil)
-class AutomovilAdmin(admin.ModelAdmin):
-    list_display = ("tipo", "placa", "color", "estado")
+@admin.register(RegisterDayTrasporte)
+class TrasporteAdmin(admin.ModelAdmin):
+    list_display = ("trasporte","registerday","adelantos","get_provedor","value_liter_traspo")
+    search_fields = ['registerday__provedor__first_name',"trasporte__conductor"]
 
+    def get_provedor(self, obj):
+        return obj.registerday.provedor.first_name  # Reemplaza 'nombre' con el nombre del campo que deseas mostrar
 
-@admin.register(RegisterDayTrasport)
-class RegisterDayTrasportAdmin(admin.ModelAdmin):
-    list_display = ("day",)
+    get_provedor.short_description = 'Proveedor'  # Esto establece el encabezado de la columna en el admin

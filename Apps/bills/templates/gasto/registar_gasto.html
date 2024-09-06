@@ -29,7 +29,7 @@
     {% endif %}
 
     <!-- Main content -->
-    <form method="POST" action="{% url 'register_day_trasport' %}" class="mx-auto">
+    <form method="POST" action="{% url 'registrar_gastos' %}" class="mx-auto">
       {% csrf_token %}
       <section class="content">
         <div class="row justify-content-center">
@@ -53,6 +53,13 @@
                       <input type="text" class="form-control" id="Valor" name="Valor" required>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="inputPrimerNombre">Valor</label>
+                        <textarea class="form-control" id="descrip" name="descrip" required></textarea>
+                      </div>
+                    </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
@@ -61,11 +68,14 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="inputSegundoNombre">Cantidad</label>
+                    <input type="text" class="form-control" id="cantidad" name="cantidad" required>
+                  </div>
+                </div>
               </div>
-
-
-
-
+              </div>
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
@@ -79,34 +89,25 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="inputRutas">Automovil</label>
-                      <select class="form-control" id="Automovil" name="Automovil" required>
-                        <option selected disabled>Seleccione un rol</option>
+                      <label for="inputRutas">Gatos</label>
+                      <select class="form-control" id="gastos" name="gastos" required>
+                        <option selected disabled>Seleccione un gatos</option>
                         {% for opcion_value, opcion_label in gastos %}
                         <option value="{{ opcion_value }}">{{ opcion_label }}</option>
                         {% endfor %}
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="inputRutas">Conductor</label>
-                      <select class="form-control" id="Conductor" name="Conductor" required>
-                        <option selected disabled>Seleccione un Conductor</option>
-                        {% for conductores in conductor %}
-                          <option value="{{ conductores.id }}">{{ conductores.first_name }}</option>
-                        {% endfor %}
-                      </select>
+                  <div class="card-body">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="Trabajo" name="Trabajo" checked>
+                      <label class="form-check-label" for="flexSwitchCheckChecked">Trabajo</label>
                     </div>
                   </div>
+
                 </div>
               </div>
-              <div class="card-body">
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="Trabajo" name="Trabajo" checked>
-                  <label class="form-check-label" for="flexSwitchCheckChecked">Trabajo</label>
-                </div>
-              </div>
+
               <div class="row justify-content-center">
                 <div class="row justify-content-center">
 

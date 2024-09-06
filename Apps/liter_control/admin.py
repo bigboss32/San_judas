@@ -10,7 +10,8 @@ class ProvedorAdmin(admin.ModelAdmin):
 
 @admin.register(RegisterDay)
 class RegisterDayAdmin(admin.ModelAdmin):
-    list_display = ("provedor",)
+    list_display = ("provedor","ruta","day","adelantos")
+    search_fields = ("day","provedor__first_name",)
 
 
 @admin.register(Ruta)

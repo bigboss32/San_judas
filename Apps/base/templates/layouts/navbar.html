@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +53,16 @@
         <a href="{% url 'index' %}" class="nav-link">Inicio</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+
+        <a href="{% url 'actualizar_valor_litros' %}" class="nav-link">Actualizar litros por ruta</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+
+        <a href="{% url 'actualizar_valor_litros' %}" class="nav-link">Actualizar valor Conductor</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+
+        <a href="{% url 'turbo_view' %}" class="nav-link">Flete Turbos</a>
       </li>
     </ul>
 
@@ -275,19 +285,54 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
+                Ventas
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'registrar_ventas' %}"class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Registar Ventas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/flot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Flot</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/inline.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Inline</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/uplot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>uPlot</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
                 Trasporte
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{% url 'create_automovil' %}" class="nav-link">
+                <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agregar Carro</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'register_day_trasport' %}" class="nav-link">
+                <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registro diario</p>
                 </a>
@@ -306,7 +351,44 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>
+                Produccion
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'registrar_production' %}"class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Registar Gastos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/flot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Flot</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/inline.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Inline</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/uplot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>uPlot</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
+
       </nav>
       <!-- /.sidebar-menu -->
     </div>

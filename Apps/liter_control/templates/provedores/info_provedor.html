@@ -1,4 +1,5 @@
 {% extends 'layouts/navbar.html' %}
+{% load humanize %}
 {% block content %}
 <div class="wrapper">
   <div class="content-wrapper">
@@ -28,11 +29,32 @@
     </div>
     {% endif %}
 
+
     <!-- Main content -->
-    <form method="POST" action="{% url 'crearprovedores' %}">
+    <form method="POST" action="{% url 'obtener_provedores' %}">
+
       {% csrf_token %}
       <section class="content">
         <div class="card">
+          <div class="form-group">
+            <label>Date range:</label>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="far fa-calendar-alt"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control float-right" name="range" id="reservation">
+              <div class="row">
+                <div class="col-12">
+
+                  <input type="submit" value="Aplicar Filtro" class="btn btn-success float-right">
+                </div>
+              </div>
+            </div>
+            <!-- /.input group -->
+          </div>
           <div class="card-header">
             <h3 class="card-title">DataTable with default features</h3>
           </div>
@@ -46,7 +68,7 @@
                   <th>Cedula</th>
                   <th>Litros mes</th>
                   <th>Adelantos</th>
-                  <th>Total</th>
+                  <th>Total a pagar leche</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,13 +87,13 @@
                     </td>
                     <td>{{provedors.provedor__cedula}} </td>
                     <td>
-                     {{provedors.total_litros}}
+                     {{provedors.total_litros|intcomma }}
                     </td>
                     <td>
                       {{provedors.total_adelantos}}
                     </td>
                     <td>
-                      {{provedors.value_total_adelantos}}
+                      {{provedors.monto_total_litros|intcomma }}
                     </td>
                 </form>
                 </tr>
@@ -85,9 +107,9 @@
                   <th>Total de provedores: {{total_provedores}}</th>
                   <th> </th>
                   <th> </th>
-                  <th>Total de litros: {{total_litros_en_toda_la_consulta}}</th>
-                  <th>Total de adelantos: {{total_adelantos_en_toda_la_consulta}}</th>
-                  <th>Total: {{total_total_en_toda_la_consulta}}</th>
+                  <th>Total de litros: {{total_litros_en_toda_la_consulta|intcomma }}</th>
+                  <th>Total de adelantos: {{total_adelantos_en_toda_la_consulta|intcomma }}</th>
+                  <th>Total: {{total_total_en_toda_la_consulta|intcomma }}</th>
                 </tr>
               </tfoot>
             </table>
@@ -114,5 +136,39 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(function () {
+
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    });
+</script>
 
 {% endblock %}

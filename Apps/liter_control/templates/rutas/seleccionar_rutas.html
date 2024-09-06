@@ -25,15 +25,26 @@
     <form method="POST" action="{% url 'crear_rutas' %}" class="mx-auto">
       {% csrf_token %}
 
+
       <!-- Application buttons -->
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Rutas Registradas</h3>
         </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text">
+                  <i class="far fa-calendar-alt"></i>
+              </span>
+          </div>
+          <input type="date" class="form-control" id="fecha" name="fecha" style="max-width: 200px;" />
+      </div>
         <div class="card-body">
+
+
           {% for rutas in ruta %}
 
-          <a href="{% url 'registro_diario' rutas.id %}" class="btn btn-app">
+          <a href="{% url 'registro_diario' rutas.id %}"  class="btn btn-app">
 
             <span class="badge bg-success">{{rutas.num_proveedores}}</span>
             <i class="fas fa-barcode"></i> {{ rutas.name_route }}
@@ -72,5 +83,32 @@
 </aside>
 <!-- /.control-sidebar -->
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Cuando se haga clic en un enlace con la clase 'btn-app'
+        $('.btn-app').click(function (event) {
+            // Obtener el valor seleccionado del campo de fecha
+            var fecha = $('#fecha').val();
+            // Obtener la URL del enlace
+            var url = $(this).attr('href');
+            // Agregar la fecha como parámetro de consulta a la URL
+            var urlWithDate = url + '?fecha=' + fecha;
+            // Actualizar el atributo 'href' del enlace con la nueva URL
+            $(this).attr('href', urlWithDate);
+        });
+    });
+    var fechaInput = document.getElementById('fecha');
+
+    // Obtener la fecha de hoy
+    var today = new Date();
+    // Restar un día
+    today.setDate(today.getDate() - 1);
+    // Obtener la parte de la fecha en formato YYYY-MM-DD
+    var yesterday = today.toISOString().split('T')[0];
+
+    // Establecer la fecha de ayer como el valor predeterminado del campo de fecha
+    fechaInput.value = yesterday;
+</script>
 
 {% endblock %}

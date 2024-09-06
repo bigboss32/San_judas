@@ -1,15 +1,15 @@
-from datetime import date
+from datetime import datetime, timedelta
 from typing import Any
-
+from django.db.models import Sum, F
 from django.contrib import messages
 from django.db.models import Sum
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.utils import timezone
 from django.views import View
 
 from Apps.base.services.crearte_register_day import CreateRegister
 from Apps.liter_control.models import RegisterDay
-
+from Apps.transportation.models import RegisterDayTrasporte
 from .services.create_provedores import *
 from .services.create_rutas import *
 
@@ -33,7 +33,7 @@ class CrearProvedoresView(View):
         else:
             messages.error(request, "Usuario o contraseña incorrectos.")
 
-        return render(request, self.template_name)
+        return redirect('crearprovedores')
 
 
 class ObtenerProvedores(View):
@@ -43,14 +43,12 @@ class ObtenerProvedores(View):
         self.crudrutas = CrudRutas()
 
     def get(self, request):
-        provedor = Provedor.objects.all()
-        tu_mes = 3
-        ano_actual = timezone.now().year
-        fecha_filtro = date(year=2024, month=1, day=1)
+        fecha_inicio = datetime(year=2024, month=3, day=10)
+        fecha_fin = datetime(year=2024, month=3, day=10)
 
         litros_por_proveedor = (
             RegisterDay.objects.filter(
-                day__month=fecha_filtro.month, day__year=fecha_filtro.year
+                day__range=(fecha_inicio, fecha_fin)
             )
             .values(
                 "provedor__first_name",
@@ -63,7 +61,7 @@ class ObtenerProvedores(View):
             .annotate(
                 total_litros=Sum("liter"),
                 total_adelantos=Sum("adelantos"),
-                value_total_adelantos=Sum("value_total_adelantos"),
+
             )
         )
         total_provedores = Provedor.objects.count()
@@ -73,8 +71,68 @@ class ObtenerProvedores(View):
         total_adelantos_en_toda_la_consulta = litros_por_proveedor.aggregate(
             total_adelantos_en_toda_la_consulta=Sum("total_adelantos")
         )["total_adelantos_en_toda_la_consulta"]
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "litros_por_proveedor": litros_por_proveedor,
+                "total_provedores": total_provedores,
+                "total_litros_en_toda_la_consulta": total_litros_en_toda_la_consulta,
+                "total_adelantos_en_toda_la_consulta": total_adelantos_en_toda_la_consulta,
+
+            },
+        )
+    def post (self, request):
+
+        date_range = request.POST["range"].split(" - ")
+        fecha_inicio_str, fecha_fin_str = date_range
+
+        fecha_inicio = datetime.strptime(fecha_inicio_str, "%m/%d/%Y")
+        fecha_fin = datetime.strptime(fecha_fin_str, "%m/%d/%Y")
+        litros_por_proveedor = (
+            RegisterDay.objects.filter(
+                day__range=(fecha_inicio, fecha_fin),
+
+            )
+            .values(
+                "provedor__first_name",
+                "provedor__second_name",
+                "provedor__last_name",
+                "provedor__second_last_name",
+                "provedor__cedula",
+                "ruta__name_route",
+                "value_liter",
+                "liter"
+            )
+            .annotate(
+                total_litros=Sum("liter"),
+                total_adelantos=Sum("adelantos"),
+                monto_total_litros=F("value_liter") * Sum("liter")
+
+            )
+        )
+        peuiwb=0
+        for registro in litros_por_proveedor:
+            proveedor_nombre = f"{registro['provedor__first_name']} {registro['provedor__second_name']} {registro['provedor__last_name']} {registro['provedor__second_last_name']}"
+            cedula_proveedor = registro['provedor__cedula']
+            ruta = registro['ruta__name_route']
+            total_litros = registro['total_litros']
+            total_adelantos = registro['total_adelantos']
+            monto_total_litros = registro['monto_total_litros']
+            peuiwb+=total_litros
+
+
+
+        total_provedores = Provedor.objects.count()
+        total_litros_en_toda_la_consulta = litros_por_proveedor.aggregate(
+            total_litros_en_toda_la_consulta=Sum("total_litros")
+        )["total_litros_en_toda_la_consulta"]
+        total_adelantos_en_toda_la_consulta = litros_por_proveedor.aggregate(
+            total_adelantos_en_toda_la_consulta=Sum("total_adelantos")
+        )["total_adelantos_en_toda_la_consulta"]
         total_total_en_toda_la_consulta = litros_por_proveedor.aggregate(
-            total_total_en_toda_la_consulta=Sum("value_total_adelantos")
+            total_total_en_toda_la_consulta=Sum("monto_total_litros")
         )["total_total_en_toda_la_consulta"]
         return render(
             request,
@@ -127,7 +185,48 @@ class LiterDayView(View):
         self.createregister = CreateRegister()
 
     def get(self, request, ruta_id):
+
         return self.createregister.get_rutas(request, ruta_id, self.template_name)
 
     def post(self, request, ruta_id):
+
         return self.createregister.createregisterday(request, ruta_id)
+
+class LiterUpdate(View):
+     template_name = "registro_diario/actualizar_registro.html"
+     def __init__(self, **kwargs: Any) -> None:
+        self.crudrutas = CrudRutas()
+        self.createregister = CreateRegister()
+     def get(self, request):
+        rutas = self.crudrutas.get_rutas()
+
+        alls=RegisterDayTrasporte.objects.filter(trasporte__conductor="propio")
+        for all in alls:
+            all.value_liter_traspo=0
+            all.save()
+        return render(request, self.template_name, {"ruta": rutas})
+     def post(self, request):
+
+        date_range = request.POST["date_range"].split(" - ")
+        id_ruta = request.POST["rutas_id"]
+        valor = request.POST["valor"]
+        fecha_inicio_str, fecha_fin_str = date_range
+
+        fecha_inicio = datetime.strptime(fecha_inicio_str, "%m/%d/%Y")
+        fecha_fin = datetime.strptime(fecha_fin_str, "%m/%d/%Y")
+        rutas=Ruta.objects.get(id=id_ruta)
+        registros = RegisterDay.objects.filter(day__range=(fecha_inicio, fecha_fin),ruta=rutas)
+        for registro in registros:
+          registro.value_liter=valor
+          registro.save()
+        r=RegisterDay.objects.filter(provedor__first_name="Livardo Rivera",day__range=(fecha_inicio, fecha_fin)
+                                    )
+        for registro in r:
+          registro.value_liter=1800
+          registro.save()
+        r=RegisterDay.objects.filter(provedor__first_name="Henri",day__range=(fecha_inicio, fecha_fin)
+                                    )
+        for registro in r:
+          registro.value_liter=1500
+          registro.save()
+        return redirect('actualizar_valor_litros')
